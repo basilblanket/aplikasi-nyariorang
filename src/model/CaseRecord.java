@@ -5,8 +5,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class CaseRecord {
+public class CaseRecord implements Serializable{
     private Person person;
     private ArrayList<Evidence> evidenceList;
     private ArrayList<String> catatanList;

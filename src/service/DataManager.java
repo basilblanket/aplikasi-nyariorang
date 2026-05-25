@@ -4,6 +4,7 @@
  */
 package service;
 
+import java.io.*;
 import java.util.ArrayList;
 import model.*;
 
@@ -13,10 +14,12 @@ public class DataManager {
 
     public static void addMissing(MissingPerson p) {
         missingList.add(new CaseRecord(p));
+        saveData();
     }
 
     public static void addSuspect(Suspect s) {
         suspectList.add(new CaseRecord(s));
+        saveData();
     }
 
     public static ArrayList<CaseRecord> getList(String tipe) {
@@ -37,5 +40,28 @@ public class DataManager {
         }
 
         return hasil;
+    }
+
+    public static void saveData() {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("data.ser"));
+            out.writeObject(missingList);
+            out.writeObject(suspectList);
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadData() {
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("data.ser"));
+            missingList = (ArrayList<CaseRecord>) in.readObject();
+            suspectList = (ArrayList<CaseRecord>) in.readObject();
+            in.close();
+        } catch (Exception e) {
+            missingList = new ArrayList<>();
+            suspectList = new ArrayList<>();
+        }
     }
 }

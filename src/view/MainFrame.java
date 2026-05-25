@@ -1,4 +1,5 @@
 package view;
+import service.DataManager;
 import java.awt.Color;
 
 /*
@@ -17,6 +18,7 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        DataManager.loadData();
         lblTitle.setIcon(
             new javax.swing.ImageIcon(
                 getClass().getResource("/asset/title1.gif")

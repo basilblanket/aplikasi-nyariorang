@@ -3,8 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
+import java.io.Serializable;
 
-public class Evidence {
+public class Evidence implements Serializable{
     private String jenis;
     private String deskripsi;
 

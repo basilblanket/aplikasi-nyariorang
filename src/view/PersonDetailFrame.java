@@ -5,6 +5,7 @@
 package view;
 import model.CaseRecord;
 import model.Evidence;
+import service.DataManager;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -277,6 +278,7 @@ public class PersonDetailFrame extends javax.swing.JFrame {
             caseRecord.addEvidence(
                 new Evidence(jenis, deskripsi)
         );
+        DataManager.saveData();
 
         tampilEvidence();
         }
@@ -290,7 +292,9 @@ public class PersonDetailFrame extends javax.swing.JFrame {
 
         if (note != null && !note.isEmpty()) {
             caseRecord.addCatatan(note);
+            DataManager.saveData();
             tampilCatatan();
+            
         }
     }//GEN-LAST:event_btnAddNoteActionPerformed
 
@@ -302,6 +306,7 @@ public class PersonDetailFrame extends javax.swing.JFrame {
 
         if (status != null && !status.isEmpty()) {
             caseRecord.getPerson().setStatus(status);
+            DataManager.saveData();
 
             tampilDetail();
         }

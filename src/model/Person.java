@@ -3,8 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
+import java.io.Serializable;
 
-public class Person {
+public class Person implements Serializable{
     protected String id;
     protected String nama;
     protected int umur;
