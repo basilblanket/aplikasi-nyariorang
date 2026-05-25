@@ -3,16 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
+
 import model.CaseRecord;
 import model.Evidence;
 import service.DataManager;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Basil
  */
 public class PersonDetailFrame extends javax.swing.JFrame {
     private CaseRecord caseRecord;
+
     /**
      * Creates new form PersonListFrame
      */
@@ -20,64 +23,109 @@ public class PersonDetailFrame extends javax.swing.JFrame {
         initComponents();
         this.caseRecord = caseRecord;
 
+        setSize(500, 620);
+        setLocationRelativeTo(null);
+        setResizable(false);
+
+        getContentPane().setBackground(new java.awt.Color(41, 0, 0));
+
+        lblTitle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asset/title1.gif")));
+        lblTitle.setText(" - Detail Kasus");
+        lblTitle.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 16));
+        lblTitle.setForeground(java.awt.Color.WHITE);
+
+        lblId.setForeground(java.awt.Color.WHITE);
+        lblNama.setForeground(java.awt.Color.WHITE);
+        lblUmur.setForeground(java.awt.Color.WHITE);
+        lblLokasi.setForeground(java.awt.Color.WHITE);
+        lblCiri.setForeground(java.awt.Color.WHITE);
+        lblStatus.setForeground(java.awt.Color.WHITE);
+        lblJudulCatatan.setForeground(java.awt.Color.WHITE);
+        lblFotoPreview.setForeground(java.awt.Color.WHITE);
+
+        txtCatatan.setBackground(new java.awt.Color(55, 0, 0));
+        txtCatatan.setForeground(java.awt.Color.WHITE);
+        txtCatatan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(80, 0, 0)));
+        txtCatatan.setCaretColor(java.awt.Color.WHITE);
+
+        jScrollPane2.getViewport().setBackground(new java.awt.Color(55, 0, 0));
+        jScrollPane3.getViewport().setBackground(new java.awt.Color(55, 0, 0));
+
+        tblEvidence.setBackground(new java.awt.Color(55, 0, 0));
+        tblEvidence.setForeground(java.awt.Color.WHITE);
+        tblEvidence.setGridColor(new java.awt.Color(80, 0, 0));
+        tblEvidence.setSelectionBackground(new java.awt.Color(100, 0, 0));
+        tblEvidence.setSelectionForeground(java.awt.Color.WHITE);
+        tblEvidence.getTableHeader().setBackground(new java.awt.Color(80, 0, 0));
+        tblEvidence.getTableHeader().setForeground(java.awt.Color.WHITE);
+
+        btnAddEvidence.setBackground(new java.awt.Color(80, 0, 0));
+        btnAddEvidence.setForeground(java.awt.Color.WHITE);
+        btnAddNote.setBackground(new java.awt.Color(80, 0, 0));
+        btnAddNote.setForeground(java.awt.Color.WHITE);
+        btnChangeStatus.setBackground(new java.awt.Color(80, 0, 0));
+        btnChangeStatus.setForeground(java.awt.Color.WHITE);
+        btnBack.setBackground(new java.awt.Color(80, 0, 0));
+        btnBack.setForeground(java.awt.Color.WHITE);
+
+        lblFotoPreview.setText("");
+        jScrollBar1.setVisible(false);
+
         tampilDetail();
         tampilEvidence();
         tampilCatatan();
     }
-    
+
     private void tampilDetail() {
-    lblId.setText("ID : " + caseRecord.getPerson().getId());
+        lblId.setText("ID : " + caseRecord.getPerson().getId());
 
-    lblNama.setText("Nama : " + caseRecord.getPerson().getNama());
+        lblNama.setText("Nama : " + caseRecord.getPerson().getNama());
 
-    lblUmur.setText("Umur : " + caseRecord.getPerson().getUmur());
+        lblUmur.setText("Umur : " + caseRecord.getPerson().getUmur());
 
-    lblLokasi.setText(
-        "Lokasi Terakhir : " +
-        caseRecord.getPerson().getLokasiTerakhir()
-    );
+        lblLokasi.setText(
+                "Lokasi Terakhir : " +
+                        caseRecord.getPerson().getLokasiTerakhir());
 
-    lblCiri.setText(
-        "Ciri-ciri : " +
-        caseRecord.getPerson().getCiriCiri()
-    );
+        lblCiri.setText(
+                "Ciri-ciri : " +
+                        caseRecord.getPerson().getCiriCiri());
 
-    lblStatus.setText(
-        "Status : " +
-        caseRecord.getPerson().getStatus()
-    );
-    String path = caseRecord.getPerson().getFotoPath();
+        lblStatus.setText(
+                "Status : " +
+                        caseRecord.getPerson().getStatus());
+        String path = caseRecord.getPerson().getFotoPath();
 
-    if (path != null && !path.isEmpty()) {
-        javax.swing.ImageIcon icon = new javax.swing.ImageIcon(path);
+        if (path != null && !path.isEmpty()) {
+            javax.swing.ImageIcon icon = new javax.swing.ImageIcon(path);
 
-        java.awt.Image img = icon.getImage().getScaledInstance(
-            120, 150, java.awt.Image.SCALE_SMOOTH
-        );
+            java.awt.Image img = icon.getImage().getScaledInstance(
+                    120, 150, java.awt.Image.SCALE_SMOOTH);
 
-        lblFotoPreview.setIcon(new javax.swing.ImageIcon(img));
+            lblFotoPreview.setIcon(new javax.swing.ImageIcon(img));
+        }
     }
-}
+
     private void tampilEvidence() {
-    DefaultTableModel model =
-        (DefaultTableModel) tblEvidence.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblEvidence.getModel();
 
-    model.setRowCount(0);
+        model.setRowCount(0);
 
-    for (Evidence e : caseRecord.getEvidenceList()) {
-        model.addRow(new Object[]{
-            e.getJenis(),
-            e.getDeskripsi()
-        });
+        for (Evidence e : caseRecord.getEvidenceList()) {
+            model.addRow(new Object[] {
+                    e.getJenis(),
+                    e.getDeskripsi()
+            });
+        }
     }
-}
+
     private void tampilCatatan() {
         txtCatatan.setText("");
 
         for (String c : caseRecord.getCatatanList()) {
             txtCatatan.append("- " + c + "\n");
         }
-    }    
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -85,7 +133,8 @@ public class PersonDetailFrame extends javax.swing.JFrame {
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -110,16 +159,15 @@ public class PersonDetailFrame extends javax.swing.JFrame {
         lblFotoPreview = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+                new Object[][] {
+                        { null, null, null, null },
+                        { null, null, null, null },
+                        { null, null, null, null },
+                        { null, null, null, null }
+                },
+                new String[] {
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                }));
         jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -139,16 +187,15 @@ public class PersonDetailFrame extends javax.swing.JFrame {
         lblLokasi.setText("Lokasi Terakhir");
 
         tblEvidence.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Jenis", "Deskripsi"
-            }
-        ));
+                new Object[][] {
+                        { null, null },
+                        { null, null },
+                        { null, null },
+                        { null, null }
+                },
+                new String[] {
+                        "Jenis", "Deskripsi"
+                }));
         jScrollPane2.setViewportView(tblEvidence);
 
         btnAddEvidence.setText("[ Add Evidence ]");
@@ -190,119 +237,132 @@ public class PersonDetailFrame extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnAddNote)
-                                .addGap(42, 42, 42)
-                                .addComponent(btnChangeStatus)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
-                                .addComponent(btnBack))
-                            .addGroup(layout.createSequentialGroup()
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblNama, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblUmur, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblLokasi)
-                                    .addComponent(lblCiri)
-                                    .addComponent(lblStatus)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnAddEvidence)
-                                    .addComponent(lblJudulCatatan, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblTitle)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblFotoPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)))
-                .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jScrollPane3)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(btnAddNote)
+                                                                .addGap(42, 42, 42)
+                                                                .addComponent(btnChangeStatus)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                                        114, Short.MAX_VALUE)
+                                                                .addComponent(btnBack))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGroup(layout.createParallelGroup(
+                                                                        javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(lblNama, javax.swing.GroupLayout.PREFERRED_SIZE, 250,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(lblUmur, javax.swing.GroupLayout.PREFERRED_SIZE, 250,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(lblLokasi)
+                                                                        .addComponent(lblCiri)
+                                                                        .addComponent(lblStatus)
+                                                                        .addComponent(jScrollPane2,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                211,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(lblId, javax.swing.GroupLayout.PREFERRED_SIZE, 250,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(btnAddEvidence)
+                                                                        .addComponent(lblJudulCatatan,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                51,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addGap(0, 0, Short.MAX_VALUE)))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lblTitle)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(lblFotoPreview, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(47, 47, 47)))
+                                .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap()));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTitle)
-                    .addComponent(lblFotoPreview))
-                .addGap(26, 26, 26)
-                .addComponent(lblId)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblNama)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblUmur)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblLokasi)
-                .addGap(9, 9, 9)
-                .addComponent(lblCiri)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblStatus)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnAddEvidence)
-                .addGap(31, 31, 31)
-                .addComponent(lblJudulCatatan)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddNote)
-                    .addComponent(btnChangeStatus)
-                    .addComponent(btnBack))
-                .addContainerGap())
-            .addComponent(jScrollBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lblTitle)
+                                        .addComponent(lblFotoPreview))
+                                .addGap(26, 26, 26)
+                                .addComponent(lblId)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblNama)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblUmur)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblLokasi)
+                                .addGap(9, 9, 9)
+                                .addComponent(lblCiri)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblStatus)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAddEvidence)
+                                .addGap(31, 31, 31)
+                                .addComponent(lblJudulCatatan)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14,
+                                        Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btnAddNote)
+                                        .addComponent(btnChangeStatus)
+                                        .addComponent(btnBack))
+                                .addContainerGap())
+                        .addComponent(jScrollBar1, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAddEvidenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEvidenceActionPerformed
+    private void btnAddEvidenceActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAddEvidenceActionPerformed
         String jenis = javax.swing.JOptionPane.showInputDialog(
-            this,
-            "Jenis Evidence"
-        );
+                this,
+                "Jenis Evidence");
 
         String deskripsi = javax.swing.JOptionPane.showInputDialog(
-            this,
-            "Deskripsi Evidence"
-        );
+                this,
+                "Deskripsi Evidence");
 
         if (jenis != null && deskripsi != null) {
             caseRecord.addEvidence(
-                new Evidence(jenis, deskripsi)
-        );
-        DataManager.saveData();
+                    new Evidence(jenis, deskripsi));
+            DataManager.saveData();
 
-        tampilEvidence();
+            tampilEvidence();
         }
-    }//GEN-LAST:event_btnAddEvidenceActionPerformed
+    }// GEN-LAST:event_btnAddEvidenceActionPerformed
 
-    private void btnAddNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNoteActionPerformed
+    private void btnAddNoteActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAddNoteActionPerformed
         String note = javax.swing.JOptionPane.showInputDialog(
-            this,
-            "Masukkan Catatan"
-        );
+                this,
+                "Masukkan Catatan");
 
         if (note != null && !note.isEmpty()) {
             caseRecord.addCatatan(note);
             DataManager.saveData();
             tampilCatatan();
-            
-        }
-    }//GEN-LAST:event_btnAddNoteActionPerformed
 
-    private void btnChangeStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeStatusActionPerformed
+        }
+    }// GEN-LAST:event_btnAddNoteActionPerformed
+
+    private void btnChangeStatusActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnChangeStatusActionPerformed
         String status = javax.swing.JOptionPane.showInputDialog(
-            this,
-            "Masukkan Status Baru"
-        );
+                this,
+                "Masukkan Status Baru");
 
         if (status != null && !status.isEmpty()) {
             caseRecord.getPerson().setStatus(status);
@@ -310,20 +370,24 @@ public class PersonDetailFrame extends javax.swing.JFrame {
 
             tampilDetail();
         }
-    }//GEN-LAST:event_btnChangeStatusActionPerformed
+    }// GEN-LAST:event_btnChangeStatusActionPerformed
 
-    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnBackActionPerformed
         dispose();
-    }//GEN-LAST:event_btnBackActionPerformed
+    }// GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+        // (optional) ">
+        /*
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+         * look and feel.
+         * For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -333,21 +397,25 @@ public class PersonDetailFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PersonDetailFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PersonDetailFrame.class.getName()).log(java.util.logging.Level.SEVERE,
+                    null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PersonDetailFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PersonDetailFrame.class.getName()).log(java.util.logging.Level.SEVERE,
+                    null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PersonDetailFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PersonDetailFrame.class.getName()).log(java.util.logging.Level.SEVERE,
+                    null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PersonDetailFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PersonDetailFrame.class.getName()).log(java.util.logging.Level.SEVERE,
+                    null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
+        // </editor-fold>
+        // </editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-//                new PersonDetailFrame().setVisible(true);
+                // new PersonDetailFrame().setVisible(true);
             }
         });
     }

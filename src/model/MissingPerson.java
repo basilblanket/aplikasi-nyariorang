@@ -7,10 +7,10 @@ package model;
 public class MissingPerson extends Person {
     private String status;
 
-    public MissingPerson(String id, String nama, int umur, String lokasiTerakhir, String ciriCiri, String status, String fotoPath) {
+    public MissingPerson(String id, String nama, int umur, String lokasiTerakhir, String ciriCiri, String status,
+            String fotoPath) {
         super(id, nama, umur, lokasiTerakhir, ciriCiri, status, fotoPath);
     }
-
 
     @Override
     public String getJenis() {

@@ -1,0 +1,11 @@
+# NetBeans specific files and folders
+nbproject/private/
+
+# Compiled class files & build directories
+build/
+dist/
+
+# Local databases or temporary serialization files
+# Jika Anda ingin membagikan data.ser awal (sebagai seed/dummy data), hapus baris di bawah ini.
+# Namun, jika datanya dinamis dan tidak ingin menimpa data teman Anda saat push/pull, biarkan di-ignore.
+data.ser

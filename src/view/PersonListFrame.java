@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
-
 package view;
 
 import model.CaseRecord;
@@ -12,12 +11,14 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 import service.DataManager;
+
 /**
  *
  * @author Basil
  */
 public class PersonListFrame extends javax.swing.JFrame {
     private String tipe;
+
     /**
      * Creates new form PersonDetailFrame
      */
@@ -27,68 +28,92 @@ public class PersonListFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         listPanel.setLayout(new javax.swing.BoxLayout(listPanel, javax.swing.BoxLayout.Y_AXIS));
-    this.tipe = tipe;
+        this.tipe = tipe;
 
-    if (tipe.equals("missing")) {
-        lblPageTitle.setText("Missing Person");
-    } else {
-        lblPageTitle.setText("Buronan");
+        getContentPane().setBackground(new java.awt.Color(41, 0, 0));
+        listPanel.setBackground(new java.awt.Color(41, 0, 0));
+        jScrollPane2.getViewport().setBackground(new java.awt.Color(41, 0, 0));
+        jScrollPane2.setBorder(null);
+
+        lblPageTitle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asset/title1.gif")));
+        lblPageTitle.setText(tipe.equals("missing") ? " - Missing Person" : " - Buronan");
+        lblPageTitle.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 16));
+        lblPageTitle.setForeground(java.awt.Color.WHITE);
+
+        lblSearch.setForeground(java.awt.Color.WHITE);
+
+        btnSearch.setBackground(new java.awt.Color(80, 0, 0));
+        btnSearch.setForeground(java.awt.Color.WHITE);
+        btnCreate.setBackground(new java.awt.Color(80, 0, 0));
+        btnCreate.setForeground(java.awt.Color.WHITE);
+        btnRefresh.setBackground(new java.awt.Color(80, 0, 0));
+        btnRefresh.setForeground(java.awt.Color.WHITE);
+        btnBack.setBackground(new java.awt.Color(80, 0, 0));
+        btnBack.setForeground(java.awt.Color.WHITE);
+
+        tampilData(DataManager.getList(tipe));
     }
 
-    tampilData(DataManager.getList(tipe));
-    }
     private void tampilData(ArrayList<CaseRecord> list) {
-    listPanel.removeAll();
-    listPanel.setAlignmentY(java.awt.Component.TOP_ALIGNMENT);
+        listPanel.removeAll();
+        listPanel.setAlignmentY(java.awt.Component.TOP_ALIGNMENT);
 
-    for (CaseRecord c : list) {
-        Person p = c.getPerson();
+        for (CaseRecord c : list) {
+            Person p = c.getPerson();
 
-        javax.swing.JPanel card = new javax.swing.JPanel();
-        card.setLayout(new java.awt.BorderLayout(10, 10));
-        card.setPreferredSize(new java.awt.Dimension(700, 120));
-        card.setMaximumSize(new java.awt.Dimension(700, 120));
-        card.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.GRAY));
+            javax.swing.JPanel card = new javax.swing.JPanel();
+            card.setLayout(new java.awt.BorderLayout(10, 10));
+            card.setPreferredSize(new java.awt.Dimension(610, 120));
+            card.setMaximumSize(new java.awt.Dimension(610, 120));
+            card.setBackground(new java.awt.Color(55, 0, 0));
+            card.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(80, 0, 0)));
 
-        javax.swing.JLabel lblFoto = new javax.swing.JLabel();
-        lblFoto.setPreferredSize(new java.awt.Dimension(100, 100));
+            javax.swing.JLabel lblFoto = new javax.swing.JLabel();
+            lblFoto.setPreferredSize(new java.awt.Dimension(100, 100));
 
-        if (p.getFotoPath() != null && !p.getFotoPath().isEmpty()) {
-            javax.swing.ImageIcon icon = new javax.swing.ImageIcon(p.getFotoPath());
-            java.awt.Image img = icon.getImage().getScaledInstance(
-                90, 90, java.awt.Image.SCALE_SMOOTH
-            );
-            lblFoto.setIcon(new javax.swing.ImageIcon(img));
+            if (p.getFotoPath() != null && !p.getFotoPath().isEmpty()) {
+                javax.swing.ImageIcon icon = new javax.swing.ImageIcon(p.getFotoPath());
+                java.awt.Image img = icon.getImage().getScaledInstance(
+                        90, 90, java.awt.Image.SCALE_SMOOTH);
+                lblFoto.setIcon(new javax.swing.ImageIcon(img));
+            }
+
+            javax.swing.JLabel lblNama = new javax.swing.JLabel(p.getNama());
+            lblNama.setForeground(java.awt.Color.WHITE);
+            lblNama.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+
+            javax.swing.JLabel lblStatus = new javax.swing.JLabel(p.getStatus());
+            lblStatus.setForeground(new java.awt.Color(220, 220, 220));
+
+            javax.swing.JLabel lblLokasi = new javax.swing.JLabel(p.getLokasiTerakhir());
+            lblLokasi.setForeground(new java.awt.Color(200, 200, 200));
+
+            javax.swing.JPanel panelText = new javax.swing.JPanel();
+            panelText.setLayout(new javax.swing.BoxLayout(panelText, javax.swing.BoxLayout.Y_AXIS));
+            panelText.setBackground(new java.awt.Color(55, 0, 0));
+            panelText.add(lblNama);
+            panelText.add(lblStatus);
+            panelText.add(lblLokasi);
+
+            javax.swing.JButton btnDetail = new javax.swing.JButton("Open Detail");
+            btnDetail.setPreferredSize(new java.awt.Dimension(120, 30));
+            btnDetail.setBackground(new java.awt.Color(80, 0, 0));
+            btnDetail.setForeground(java.awt.Color.WHITE);
+
+            btnDetail.addActionListener(e -> {
+                new PersonDetailFrame(c).setVisible(true);
+            });
+
+            card.add(lblFoto, java.awt.BorderLayout.WEST);
+            card.add(panelText, java.awt.BorderLayout.CENTER);
+            card.add(btnDetail, java.awt.BorderLayout.EAST);
+
+            listPanel.add(card);
         }
 
-        javax.swing.JLabel lblNama = new javax.swing.JLabel(p.getNama());
-        javax.swing.JLabel lblStatus = new javax.swing.JLabel(p.getStatus());
-        javax.swing.JLabel lblLokasi = new javax.swing.JLabel(p.getLokasiTerakhir());
-
-        javax.swing.JPanel panelText = new javax.swing.JPanel();
-        panelText.setLayout(new javax.swing.BoxLayout(panelText, javax.swing.BoxLayout.Y_AXIS));
-        panelText.add(lblNama);
-        panelText.add(lblStatus);
-        panelText.add(lblLokasi);
-
-        javax.swing.JButton btnDetail = new javax.swing.JButton("Open Detail");
-        btnDetail.setPreferredSize(new java.awt.Dimension(120, 30));
-
-        btnDetail.addActionListener(e -> {
-            new PersonDetailFrame(c).setVisible(true);
-        });
-
-        card.add(lblFoto, java.awt.BorderLayout.WEST);
-        card.add(panelText, java.awt.BorderLayout.CENTER);
-        card.add(btnDetail, java.awt.BorderLayout.EAST);
-
-        listPanel.add(card);
+        listPanel.revalidate();
+        listPanel.repaint();
     }
-
-    listPanel.revalidate();
-    listPanel.repaint();
-}
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -96,7 +121,8 @@ public class PersonListFrame extends javax.swing.JFrame {
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         lblPageTitle = new javax.swing.JLabel();
@@ -150,80 +176,96 @@ public class PersonListFrame extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblPageTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(89, 89, 89)
-                        .addComponent(lblSearch)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(259, 259, 259)
-                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnCreate)
-                                .addGap(50, 50, 50)
-                                .addComponent(btnRefresh)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnBack))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(740, Short.MAX_VALUE))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addComponent(lblPageTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 350,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(89, 89, 89)
+                                                .addComponent(lblSearch)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 83,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(259, 259, 259)
+                                                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 100,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(19, 19, 19)
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING,
+                                                                false)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(btnCreate)
+                                                                .addGap(50, 50, 50)
+                                                                .addComponent(btnRefresh)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        Short.MAX_VALUE)
+                                                                .addComponent(btnBack))
+                                                        .addComponent(jScrollPane2,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE, 666,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addContainerGap(740, Short.MAX_VALUE)));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblPageTitle)
-                            .addComponent(lblSearch)
-                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSearch))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2)
-                        .addGap(78, 78, 78))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(318, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnCreate)
-                            .addComponent(btnRefresh)
-                            .addComponent(btnBack))))
-                .addContainerGap())
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(lblPageTitle)
+                                                        .addComponent(lblSearch)
+                                                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(btnSearch))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jScrollPane2)
+                                                .addGap(78, 78, 78))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addContainerGap(318, Short.MAX_VALUE)
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(btnCreate)
+                                                        .addComponent(btnRefresh)
+                                                        .addComponent(btnBack))))
+                                .addContainerGap()));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnRefreshActionPerformed
         tampilData(DataManager.getList(tipe));
-    }//GEN-LAST:event_btnRefreshActionPerformed
+    }// GEN-LAST:event_btnRefreshActionPerformed
 
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnSearchActionPerformed
         String keyword = txtSearch.getText();
         tampilData(DataManager.search(tipe, keyword));
-    }//GEN-LAST:event_btnSearchActionPerformed
+    }// GEN-LAST:event_btnSearchActionPerformed
 
-    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnBackActionPerformed
         dispose();
-    }//GEN-LAST:event_btnBackActionPerformed
+    }// GEN-LAST:event_btnBackActionPerformed
 
-    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCreateActionPerformed
         new PersonFormFrame(tipe).setVisible(true);
-    }//GEN-LAST:event_btnCreateActionPerformed
+    }// GEN-LAST:event_btnCreateActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+        // (optional) ">
+        /*
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+         * look and feel.
+         * For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -233,18 +275,22 @@ public class PersonListFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PersonListFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PersonListFrame.class.getName()).log(java.util.logging.Level.SEVERE,
+                    null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PersonListFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PersonListFrame.class.getName()).log(java.util.logging.Level.SEVERE,
+                    null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PersonListFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PersonListFrame.class.getName()).log(java.util.logging.Level.SEVERE,
+                    null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PersonListFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PersonListFrame.class.getName()).log(java.util.logging.Level.SEVERE,
+                    null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
