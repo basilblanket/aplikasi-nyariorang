@@ -30,7 +30,7 @@ public class PersonFormFrame extends javax.swing.JFrame {
             lblTitle.setText("Create Buronan");
             lblRisiko.setVisible(true);
             txtRisiko.setVisible(true);
-    }
+        }
     }
 
     /**
@@ -183,19 +183,21 @@ public class PersonFormFrame extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(btnChooseFoto)
-                                        .addGap(11, 11, 11))
-                                    .addComponent(lblFotoPreview, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(17, 17, 17))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(txtFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(50, 50, 50))))
+                                        .addComponent(lblFotoPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap())))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(142, 142, 142)
                                 .addComponent(btnCancel)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addContainerGap())))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,18 +227,19 @@ public class PersonFormFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblCiri)
-                            .addComponent(txtCiri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(lblFotoPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblStatus)
-                    .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCiri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblStatus)
+                            .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblFotoPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblRisiko)
-                    .addComponent(txtRisiko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFoto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                    .addComponent(txtRisiko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(txtFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
                     .addComponent(btnCancel))
@@ -344,21 +347,41 @@ public class PersonFormFrame extends javax.swing.JFrame {
 
     private void btnChooseFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseFotoActionPerformed
         javax.swing.JFileChooser chooser = new javax.swing.JFileChooser();
+        chooser.setFileFilter(
+            new javax.swing.filechooser.FileNameExtensionFilter(
+                "Image Files",
+                "jpg",
+                "jpeg",
+                "png"
+            )
+        );
         int hasil = chooser.showOpenDialog(this);
 
         if (hasil == javax.swing.JFileChooser.APPROVE_OPTION) {
-        String path = chooser.getSelectedFile().getAbsolutePath();
-        txtFoto.setText(path);
+            String path = chooser.getSelectedFile().getAbsolutePath();
+            txtFoto.setText(path);
 
-        javax.swing.ImageIcon icon = new javax.swing.ImageIcon(path);
-        java.awt.Image img = icon.getImage().getScaledInstance(
-            lblFotoPreview.getWidth(),
-            lblFotoPreview.getHeight(),
-            java.awt.Image.SCALE_SMOOTH
-        );
+            java.io.File file = new java.io.File(path);
+            if (!file.exists()) {
+                JOptionPane.showMessageDialog(this, "File foto tidak ditemukan");
+                return;
+            }
 
-        lblFotoPreview.setText("");
-        lblFotoPreview.setIcon(new javax.swing.ImageIcon(img));
+            javax.swing.ImageIcon icon = new javax.swing.ImageIcon(path);
+
+            if (icon.getIconWidth() <= 0) {
+                JOptionPane.showMessageDialog(this, "Format gambar tidak bisa dibaca");
+                return;
+            }
+
+            java.awt.Image img = icon.getImage().getScaledInstance(
+                170, 135, java.awt.Image.SCALE_SMOOTH
+            );
+
+            lblFotoPreview.setText("");
+            lblFotoPreview.setIcon(new javax.swing.ImageIcon(img));
+            lblFotoPreview.revalidate();
+            lblFotoPreview.repaint();
         }
     }//GEN-LAST:event_btnChooseFotoActionPerformed
 

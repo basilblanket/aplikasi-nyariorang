@@ -44,7 +44,7 @@ public class DataManager {
 
     public static void saveData() {
         try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("data.ser"));
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("src/data.ser"));
             out.writeObject(missingList);
             out.writeObject(suspectList);
             out.close();
@@ -55,7 +55,7 @@ public class DataManager {
 
     public static void loadData() {
         try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("data.ser"));
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("src/data.ser"));
             missingList = (ArrayList<CaseRecord>) in.readObject();
             suspectList = (ArrayList<CaseRecord>) in.readObject();
             in.close();
