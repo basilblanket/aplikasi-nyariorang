@@ -28,7 +28,6 @@ public class PersonFormFrame extends javax.swing.JFrame {
             lblRisiko.setVisible(true);
             txtRisiko.setVisible(true);
         }
-<<<<<<< HEAD
         lblTitle.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 16));
         lblTitle.setForeground(java.awt.Color.WHITE);
 
@@ -85,8 +84,6 @@ public class PersonFormFrame extends javax.swing.JFrame {
         btnCancel.setForeground(java.awt.Color.WHITE);
         btnChooseFoto.setBackground(new java.awt.Color(80, 0, 0));
         btnChooseFoto.setForeground(java.awt.Color.WHITE);
-=======
->>>>>>> 286cf107ae0135e755dee41d83730e9781ce210b
     }
 
     @SuppressWarnings("unchecked")
